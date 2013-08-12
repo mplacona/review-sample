@@ -12,7 +12,8 @@ describe 'main application' do
     last_response.should be_ok
   end
 
-  specify 'should have more specs' do
-    pending
+  specify 'should list all reviews' do
+    get '/reviews'
+    last_response.should be_ok
   end
 end
