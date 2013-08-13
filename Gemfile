@@ -10,6 +10,8 @@ gem 'dm-aggregates'
 gem 'dm-migrations'
 gem 'haml'
 gem 'autotest-standalone'
+gem 'factory_girl'
+gem 'test-unit', '~> 2.0.0'
 
 group :test do
   gem 'rspec', :require => 'spec'
