@@ -1,8 +1,9 @@
 require "#{File.dirname(__FILE__)}/spec_helper"
+require "#{File.dirname(__FILE__)}/factories"
 
 describe 'review' do
   before(:each) do
-    @review = Review.new(:name => 'test user', :text => 'my test review')
+    @review = FactoryGirl.build(:review)
   end
 
   specify 'should be valid' do
