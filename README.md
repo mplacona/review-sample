@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/mplacona/review-sample.png?branch=master)](https://travis-ci.org/mplacona/review-sample)
+
 review-sample
 =============
 
