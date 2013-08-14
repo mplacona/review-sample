@@ -36,6 +36,22 @@ describe 'main application' do
         # there should now be 1 review
         Review.count.should == 1
     end
+    
+    specify 'should return 400 on validation failure' do
+        post '/review', FactoryGirl.attributes_for(:review, :text => '')
+        last_response.body.should eql('{"errors":{"text":["Text must not be blank"]}}')
+        last_response.status.should eql(400) 
+    end
+
+    specify 'should return 400 on general error' do
+        post '/review'
+        last_response.status.should eql(400)
+    end
+
+    specify 'should return 404 when url malformed' do
+        post '/review/1'
+        last_response.status.should eql(404)
+    end
   end
 
   describe "PATCH and DELETE" do
