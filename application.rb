@@ -2,12 +2,14 @@ require 'rubygems'
 require 'bundler/setup'
 require 'sinatra'
 require 'data_mapper'
+require 'json'
 require File.join(File.dirname(__FILE__), 'lib/review')
-
 require File.join(File.dirname(__FILE__), 'environment')
 
 configure do
   set :views, "#{File.dirname(__FILE__)}/views"
+  DataMapper.setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/dev.db")
+  DataMapper.finalize.auto_upgrade!
 end
 
 error do
@@ -36,7 +38,7 @@ post '/review' do
         if review.save
             review.to_json
         else
-            error 400, review.errors.to_json
+            error 400, { :errors => review.errors.to_h }.to_json
         end
     rescue => e
         error 400, e.message.to_json
@@ -50,7 +52,7 @@ patch '/review/:id' do
             review.to_json
             status 204
         else
-            error 400, review.errors.to_json
+            error 400, { :errors => review.errors.to_h }.to_json
         end
     rescue => e
         error 400, e.message.to_json
@@ -63,7 +65,7 @@ delete '/review/:id' do
         if(review.destroy!)
             status 204
         else
-            error 400, review.errors.to_json
+            error 400, { :errors => review.errors.to_h }.to_json
         end
     rescue => e
         error 400, e.message.to_json
