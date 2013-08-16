@@ -29,7 +29,12 @@ end
 
 # reviews
 get '/reviews' do
-
+    if review = Review.all
+        content_type :json
+        review.to_json
+    else
+        json_status 404, "No reviews found"
+    end
 end
 
 post '/review' do
