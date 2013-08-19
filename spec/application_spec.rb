@@ -54,10 +54,19 @@ describe 'main application' do
     end
   end
 
-  describe "PATCH and DELETE" do
+  describe "PATCH, GET and DELETE" do
     before :each do
       # create a review
       post '/review', FactoryGirl.attributes_for(:review)
+    end
+
+    specify 'should return one review' do
+        get 'review/1'
+
+        body = JSON::parse(last_response.body)
+
+        body["id"].should == 1
+        body["name"].should == "Joe Bloggs"
     end
     
     specify 'should update a review' do

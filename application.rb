@@ -37,6 +37,19 @@ get '/reviews' do
     end
 end
 
+get '/review/:id' do
+    begin
+        if review = Review.get(params['id'])
+            content_type :json
+            review.to_json
+        else
+            json_status 404, "Review not found"
+        end
+    rescue => e
+        json_status 400, e.message
+    end
+end
+
 post '/review' do
     begin
         review = Review.new(:name => params['name'], :text => params['text'])
